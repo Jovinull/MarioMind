@@ -3,9 +3,6 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from mariomind.algos.ppo import train_ppo
-from mariomind.algos.duel_dqn import train_duel_dqn
-from mariomind.eval.dqn_play import play_dqn
 from mariomind.utils.fs import ensure_project_layout
 from mariomind.utils.paths import make_run_id
 
@@ -55,7 +52,7 @@ def main(argv: list[str] | None = None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
 
-    # Sempre garante layout básico (pastas base).
+    # init não deveria depender de gym/torch/etc.
     ensure_project_layout()
 
     if args.cmd == "init":
@@ -67,10 +64,14 @@ def main(argv: list[str] | None = None) -> None:
         run_id = args.run_id or make_run_id(args.algo)
 
         if args.algo == "ppo":
+            from mariomind.algos.ppo import train_ppo  # lazy import
+
             train_ppo(run_id=run_id, num_env=args.num_env)
             return
 
         if args.algo == "dqn":
+            from mariomind.algos.duel_dqn import train_duel_dqn  # lazy import
+
             train_duel_dqn(run_id=run_id)
             return
 
@@ -78,6 +79,8 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.cmd == "play":
         if args.algo == "dqn":
+            from mariomind.eval.dqn_play import play_dqn  # lazy import
+
             ckpt = Path(args.ckpt) if args.ckpt else None
             play_dqn(ckpt_path=ckpt, sleep_s=args.sleep)
             return
