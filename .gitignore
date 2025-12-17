@@ -1,0 +1,43 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+venv/
+
+# =========================
+# IDEs / OS
+# =========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# =========================
+# RL/ML artifacts (gerados)
+# =========================
+runs/
+monitor/
+*.log
+
+# Model checkpoints / pickles (gerados)
+*.pt
+*.pth
+*.p
+*.pkl
+
+# Vídeos e renders (gerados)
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Gifs gerados soltos (se quiser manter, coloque em docs/assets/)
+*.gif
+!docs/assets/*.gif
